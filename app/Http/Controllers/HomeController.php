@@ -21,6 +21,58 @@ class HomeController extends Controller
         return view('home', compact('pengaduans', 'beritas'));
     }
 
+    public function getChartData(Request $request)
+    {
+        $selectedYear = $request->input('year');
+
+        $pemasukanData = Pemasukan::selectRaw('MONTH(tanggal_pemasukan) AS bulan, SUM(jumlah_pemasukan) AS total_pemasukan')
+            ->whereYear('tanggal_pemasukan', $selectedYear)
+            ->where('status', 'disetujui')
+            ->groupBy('bulan')
+            ->orderBy('bulan')
+            ->pluck('total_pemasukan', 'bulan')
+            ->toArray();
+
+
+        $pengeluaranData = Pengeluaran::selectRaw('MONTH(tanggal_pengeluaran) AS bulan, SUM(jumlah_pengeluaran) AS total_pengeluaran')
+            ->whereYear('tanggal_pengeluaran', $selectedYear)
+            ->where('status', 'disetujui')
+            ->groupBy('bulan')
+            ->orderBy('bulan')
+            ->pluck('total_pengeluaran', 'bulan')
+            ->toArray();
+
+        $bulan = [
+            '1' => 'Jan',
+            '2' => 'Feb',
+            '3' => 'Mar',
+            '4' => 'Apr',
+            '5' => 'Mei',
+            '6' => 'Jun',
+            '7' => 'Jul',
+            '8' => 'Ags',
+            '9' => 'Sep',
+            '10' => 'Okt',
+            '11' => 'Nov',
+            '12' => 'Des'
+        ];
+
+        $pemasukanChart = [];
+        $pengeluaranChart = [];
+
+        foreach ($bulan as $key => $value) {
+            $pemasukanChart[] = $pemasukanData[$key] ?? 0;
+            $pengeluaranChart[] = $pengeluaranData[$key] ?? 0;
+        }
+        $chartData = [
+            'pemasukan' => $pemasukanChart,
+            'pengeluaran' => $pengeluaranChart,
+            'bulan' => $bulan,
+        ];
+
+        return response()->json($chartData);
+    }
+
     public function dashboard()
     {
         $currentYear = Carbon::now()->year;
@@ -81,6 +133,7 @@ class HomeController extends Controller
         $beritas = Berita::latest()->paginate(5);
         return view('index-berita', compact('beritas'));
     }
+
     public function detailBerita(string $id)
     {
         $berita = Berita::findOrFail($id);

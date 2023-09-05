@@ -13,6 +13,7 @@ use App\Http\Controllers\VerifikasiController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/get-chart-data', [HomeController::class, 'getChartData'])->name('get.chart.data');
 Route::get('pengaduan', [PengaduanController::class, 'index'])->name('pengaduan');
 Route::post('pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
 Route::post('pengaduan/komentar/{id}', [KomentarController::class, 'store'])->name('pengaduan.komentar');

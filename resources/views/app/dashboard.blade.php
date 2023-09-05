@@ -1,5 +1,5 @@
 <x-app-layout>
-
+    {!! json_encode($pengeluaranChart, JSON_NUMERIC_CHECK) !!}
     <div class="row ">
         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
             <div class="card">
@@ -74,6 +74,15 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
+                        <div class="col-lg-5">
+                            <select name="tahun" id="tahun" class="form-control">
+                                @for ($i = date('Y'); $i >= date('Y') - 20; $i -= 1)
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
                         <div class="col-lg-12">
                             <div id="chart1"></div>
                         </div>
@@ -159,6 +168,39 @@
             var chart = new ApexCharts(document.querySelector("#chart1"), options);
 
             chart.render();
+
+            $('#tahun').change(function() {
+                var selectedYear = $(this).val();
+
+                if (selectedYear !== '') {
+                    $.ajax({
+                        url: "{{ route('get.chart.data') }}",
+                        method: "GET",
+                        data: {
+                            year: selectedYear
+                        },
+                        success: function(data) {
+                            data.pemasukan = data.pemasukan.map(Number);
+                            data.pengeluaran = data.pengeluaran.map(Number);
+
+                            var dataPemasukan = data.pemasukan;
+                            var dataPengeluaran = data.pengeluaran;
+                            chart.updateSeries([{
+                                    name: "Pemasukan",
+                                    data: dataPemasukan
+                                },
+                                {
+                                    name: "Pengeluaran",
+                                    data: dataPengeluaran
+                                }
+                            ]);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                }
+            });
         </script>
     @endpush
 </x-app-layout>
