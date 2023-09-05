@@ -3,7 +3,6 @@
 
         <div class="logo">
             <a href="{{ route('home') }}"><img src="{{ asset('logo.png') }}" alt="Logo" class="img-fluid"></a>
-            {{-- <h1 class="text-light"><a href="index.html"><span>{{ config('app.name') }}</span></a></h1> --}}
         </div>
 
         <nav id="navbar" class="navbar">
@@ -20,11 +19,6 @@
                 </li>
                 <li><a class="{{ request()->is('laporan-akhir*') ? 'active' : '' }}"
                         href="{{ route('all.lap.akhir') }}">Laporan Akhir</a></li>
-                @auth
-                    <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                @else
-                    <li><a href="{{ route('login') }}">Login</a></li>
-                @endauth
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>

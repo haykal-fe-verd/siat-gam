@@ -25,13 +25,52 @@
                                         style="height: 150px;width: 100%; object-fit: cover">
                                 @endif
 
-                                <form action="{{ route('pengaduan.like', $pengaduan->id) }}" method="POST">
+                                <div class="d-flex flex-row align-items-center">
+                                    <form action="{{ route('pengaduan.like', $pengaduan->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="border-0 bg-transparent">
+                                            <i class="fas fa-heart"
+                                                style="color: {{ $pengaduan->likes->contains('ip_address', request()->ip()) ? 'red' : 'black' }}"></i>
+                                            {{ $pengaduan->like_count }}
+                                        </button>
+                                    </form>
+                                    <i class="fas fa-comment"></i>
+                                    <span class="ms-1">{{ $pengaduan->komentar->count() }}</span>
+                                </div>
+
+
+                                <hr>
+                                @foreach ($pengaduan->komentar as $komentar)
+                                    <div class="comment">
+                                        <strong>{{ $komentar->nama }}</strong>:
+                                        {{ $komentar->komentar }}
+                                    </div>
+                                @endforeach
+                                <hr>
+
+                                <form action="{{ route('pengaduan.komentar', $pengaduan->id) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="border-0 bg-transparent">
-                                        <i class="fas fa-heart"
-                                            style="color: {{ $pengaduan->likes->contains('ip_address', request()->ip()) ? 'red' : 'black' }}"></i>
-                                        {{ $pengaduan->like_count }}
-                                    </button>
+                                    <div class="form-group">
+                                        <label for="nama">Nama:</label>
+                                        <input type="text" name="nama" id="nama"
+                                            class="form-control @error('nama') is-invalid @enderror"
+                                            value="{{ old('nama') }}">
+                                        @error('nama')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="komentar">Komentar:</label>
+                                        <textarea name="komentar" id="komentar" class="form-control @error('komentar') is-invalid @enderror" rows="3">{{ old('komentar') }}</textarea>
+                                        @error('komentar')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mt-3">Tambah Komentar</button>
                                 </form>
                             </div>
                         </div>

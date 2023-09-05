@@ -11,7 +11,7 @@ class Pengeluaran extends Model
     protected $table = "tb_pengeluaran";
     protected $primaryKey = 'id';
     protected $guarded = [];
-    protected $dates = ['tanggal_pengeluaran'];
+    protected $dates = ['tanggal_pengeluaran', 'tanggal_selesai'];
 
 
     public function pemasukan()

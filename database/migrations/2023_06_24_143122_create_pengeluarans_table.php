@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('penanggung_jawab');
             $table->string('lama_kegiatan');
             $table->date('tanggal_pengeluaran');
+            $table->date('tanggal_selesai')->nullable();
             $table->integer('jumlah_pengeluaran');
             $table->enum('status', ['menunggu', 'disetujui', 'ditolak'])->default('menunggu');
             $table->enum('laporan_akhir', ['menunggu', 'disetujui'])->default('menunggu');

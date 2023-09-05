@@ -45,6 +45,7 @@ class VerifikasiController extends Controller
             'lama_kegiatan' => 'required',
             'penanggung_jawab' => 'required',
             'tanggal_pengeluaran' => 'required|date',
+            'tanggal_selesai' => 'nullable|date',
             'jumlah_pengeluaran' => 'required',
         ]);
 
@@ -55,6 +56,7 @@ class VerifikasiController extends Controller
         $pengeluaran->lama_kegiatan = $request->input('lama_kegiatan');
         $pengeluaran->penanggung_jawab = $request->input('penanggung_jawab');
         $pengeluaran->tanggal_pengeluaran = $request->input('tanggal_pengeluaran');
+        $pengeluaran->tanggal_selesai = $request->input('tanggal_selesai');
         $pengeluaran->jumlah_pengeluaran = $request->input('jumlah_pengeluaran');
         $pengeluaran->save();
 

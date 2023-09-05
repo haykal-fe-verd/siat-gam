@@ -15,7 +15,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $pengaduans = Pengaduan::latest()->paginate(6);
+        $pengaduans = Pengaduan::with('komentar')->latest()->paginate(3);
         $beritas = Berita::latest()->take(3)->get();
 
         return view('home', compact('pengaduans', 'beritas'));

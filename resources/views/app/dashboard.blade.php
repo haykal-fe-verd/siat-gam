@@ -89,7 +89,7 @@
         <script>
             var options = {
                 chart: {
-                    height: 230,
+                    height: 500,
                     type: "line",
                     shadow: {
                         enabled: true,

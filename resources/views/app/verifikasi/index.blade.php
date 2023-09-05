@@ -104,8 +104,12 @@
                                             end="true" endText="Hari" value="{{ old('lama_kegiatan') }}" />
 
                                         <!--tanggal_pengeluaran-->
-                                        <x-input name="tanggal_pengeluaran" label="Tanggal Pengeluaran" type="date"
+                                        <x-input name="tanggal_pengeluaran" label="Tanggal Mulai" type="date"
                                             value="{{ old('tanggal_pengeluaran') }}" />
+
+                                        <!--tanggal_selesai-->
+                                        <x-input name="tanggal_selesai" label="Tanggal Selesai" type="date"
+                                            value="{{ old('tanggal_selesai') }}" />
                                     </div>
                                 </div>
 

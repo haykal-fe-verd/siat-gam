@@ -48,7 +48,17 @@
                         },
                         {
                             data: 'alamat',
-                            name: 'alamat'
+                            name: 'alamat',
+                            render: function(data, type, row) {
+                                var latitude = row.latitude;
+                                var longitude = row.longitude;
+                                var mapUrl =
+                                    "{{ route('show.map', ['latitude' => 'LATITUDE', 'longitude' => 'LONGITUDE']) }}";
+                                mapUrl = mapUrl.replace('LATITUDE', latitude).replace('LONGITUDE',
+                                    longitude);
+                                return '<a href="' + mapUrl +
+                                    '" target="_blank">Lihat Alamat pada peta</a>';
+                            }
                         },
                         {
                             data: 'email',

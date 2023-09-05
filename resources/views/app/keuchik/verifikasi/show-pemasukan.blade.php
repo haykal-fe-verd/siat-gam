@@ -54,7 +54,7 @@
                         <tr>
                             <td colspan="2">
                                 <div class="form-group mt-3">
-                                    <label>Pesan</label>
+                                    <label>Informasi Tambahan</label>
                                     <textarea name="pesan" id="pesan" class="form-control  @error('pesan') is-invalid @enderror">{{ old('pesan', $data->pesan) }}</textarea>
                                     @error('pesan')
                                         <div class="invalid-feedback">
