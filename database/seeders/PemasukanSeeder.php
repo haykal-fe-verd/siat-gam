@@ -16,7 +16,7 @@ class PemasukanSeeder extends Seeder
     {
         for ($i = 1; $i <= 100; $i++) {
             Pemasukan::create([
-                'nomor_pemasukan' => 'PMS_' . $i,
+                'nomor_pemasukan' =>  '00' . $i . '/DS/09/2023',
                 'sumber_pemasukan' => 'OTSUS 2023',
                 'tanggal_pemasukan' => Carbon::now()->format('Y-m-d'),
                 'jumlah_pemasukan' => 20000000,

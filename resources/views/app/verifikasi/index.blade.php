@@ -29,7 +29,7 @@
                                     <div class="col-12 col-md-6">
                                         <!--nomor_pemasukan-->
                                         <x-input name="nomor_pemasukan" label="Nomor Pemasukan" type="text"
-                                            value="{{ old('nomor_pemasukan') }}" />
+                                            value="{{ $nomorPemasukan }}" disabled />
 
                                         <!--tanggal_pemasukan-->
                                         <x-input name="tanggal_pemasukan" label="Tanggal Pemasukan" type="date"
@@ -66,7 +66,7 @@
                                     <div class="col-12 col-md-6">
                                         <!--nomor_pengeluaran-->
                                         <x-input name="nomor_pengeluaran" label="Nomor Pengeluaran" type="text"
-                                            value="{{ old('nomor_pengeluaran') }}" />
+                                            value="{{ $nomorPengeluaran }}" disabled />
 
                                         <!--nama_kegiatan-->
                                         <x-input name="nama_kegiatan" label="Nama Kegiatan" type="text"

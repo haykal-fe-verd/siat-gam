@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tb_pemasukan', function (Blueprint $table) {
             $table->id();
-            $table->string('nomor_pemasukan')->unique();
+            $table->string('nomor_pemasukan');
             $table->string('sumber_pemasukan');
             $table->date('tanggal_pemasukan');
             $table->integer('jumlah_pemasukan');

@@ -19,7 +19,7 @@ class PengeluaranSeeder extends Seeder
             $randomPemasukan = Pemasukan::where('status', 'disetujui')->inRandomOrder()->first();
 
             Pengeluaran::create([
-                'nomor_pengeluaran' => 'PNG_' . $i,
+                'nomor_pengeluaran' => '00' . $i . '/DS/09/2023',
                 'sumber_dana' => $randomPemasukan->id,
                 'nama_kegiatan' => 'Kegiatan ' . $i,
                 'penanggung_jawab' => 'Muhammad Haykal',

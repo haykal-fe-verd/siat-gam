@@ -14,20 +14,59 @@ class VerifikasiController extends Controller
     public function index()
     {
         $dataPemasukan = Pemasukan::where('status', 'disetujui')->latest()->get();
-        return view('app.verifikasi.index', compact('dataPemasukan'));
+        $lastPengeluaran = Pengeluaran::latest('created_at')->first();
+        $lastPemasukan = Pemasukan::latest('created_at')->first();
+        if ($lastPemasukan) {
+            $parts = explode('/', $lastPemasukan->nomor_pemasukan);
+            $number = (int) $parts[0] + 1;
+            $year = date('Y');
+            $month = date('m');
+            $nomorPemasukan = sprintf('%03d', $number) . '/DS/' . $month . '/' . $year;
+        } else {
+            $year = date('Y');
+            $month = date('m');
+            $nomorPemasukan = '001/DS/' .  $month . '/' . $year;
+        }
+
+        if ($lastPengeluaran) {
+            $parts = explode('/', $lastPengeluaran->nomor_pengeluaran);
+            $number = (int) $parts[0] + 1;
+            $year = date('Y');
+            $month = date('m');
+            $nomorPengeluaran = sprintf('%03d', $number) . '/DS/' . $month . '/' . $year;
+        } else {
+            $year = date('Y');
+            $month = date('m');
+            $nomorPengeluaran = '001/DS/' .  $month . '/' . $year;
+        }
+
+        return view('app.verifikasi.index', compact('dataPemasukan', 'nomorPengeluaran', 'nomorPemasukan'));
     }
 
     public function pemasukanStore(Request $request)
     {
         $request->validate([
-            'nomor_pemasukan' => 'required|unique:tb_pemasukan,nomor_pemasukan',
             'sumber_pemasukan' => 'required',
             'tanggal_pemasukan' => 'required|date',
             'jumlah_pemasukan' => 'required',
         ]);
 
+        $lastPemasukan = Pemasukan::latest('created_at')->first();
+        if ($lastPemasukan) {
+            $parts = explode('/', $lastPemasukan->nomor_pemasukan);
+            $number = (int) $parts[0] + 1;
+            $year = date('Y');
+            $month = date('m');
+            $nomorPemasukan = sprintf('%03d', $number) . '/DS/' . $month . '/' . $year;
+        } else {
+            $year = date('Y');
+            $month = date('m');
+            $nomorPemasukan = '001/DS/' .  $month . '/' . $year;
+        }
+
+
         $pemasukan = new Pemasukan();
-        $pemasukan->nomor_pemasukan = $request->input('nomor_pemasukan');
+        $pemasukan->nomor_pemasukan = $nomorPemasukan;
         $pemasukan->sumber_pemasukan = $request->input('sumber_pemasukan');
         $pemasukan->tanggal_pemasukan = $request->input('tanggal_pemasukan');
         $pemasukan->jumlah_pemasukan = $request->input('jumlah_pemasukan');
@@ -49,15 +88,20 @@ class VerifikasiController extends Controller
         ]);
 
         $lastPengeluaran = Pengeluaran::latest('created_at')->first();
-
         if ($lastPengeluaran) {
             $parts = explode('/', $lastPengeluaran->nomor_pengeluaran);
             $number = (int) $parts[0] + 1;
-            $nomorPengeluaran = sprintf('%03d', $number) . '/' . $parts[1] . '/' . $parts[2] . '/' . $parts[3];
+            $year = date('Y');
+            $month = date('m');
+            $nomorPengeluaran = sprintf('%03d', $number) . '/DS/' . $month . '/' . $year;
+        } else {
+            $year = date('Y');
+            $month = date('m');
+            $nomorPengeluaran = '001/DS/' .  $month . '/' . $year;
         }
 
         $pengeluaran = new Pengeluaran();
-        $pengeluaran->nomor_pengeluaran = $request->input('nomor_pengeluaran');
+        $pengeluaran->nomor_pengeluaran = $nomorPengeluaran;
         $pengeluaran->sumber_dana = $request->input('sumber_dana');
         $pengeluaran->nama_kegiatan = $request->input('nama_kegiatan');
         $pengeluaran->lama_kegiatan = $request->input('lama_kegiatan');

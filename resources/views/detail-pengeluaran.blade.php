@@ -52,7 +52,7 @@
                                         width="100%" height="400px" style="object-fit: cover">
                                     <hr>
                                     <h4 class="mt-3 fw-bold">{{ $pengeluaran->proses1 }}</h4>
-                                    <p> {!! $pengeluaran->keterangan1 !!}</p>
+                                    <div style="overflow-wrap: break-word;"> {!! $pengeluaran->keterangan1 !!}</div>
                                 </div>
                             @endif
 
@@ -63,7 +63,7 @@
                                         width="100%" height="400px" style="object-fit: cover">
                                     <hr>
                                     <h4 class="mt-3 fw-bold">{{ $pengeluaran->proses2 }}</h4>
-                                    <p> {!! $pengeluaran->keterangan2 !!}</p>
+                                    <div style="overflow-wrap: break-word;"> {!! $pengeluaran->keterangan2 !!}</div>
                                 </div>
                             @endif
 
@@ -74,7 +74,7 @@
                                         width="100%" height="400px" style="object-fit: cover">
                                     <hr>
                                     <h4 class="mt-3 fw-bold">{{ $pengeluaran->proses3 }}</h4>
-                                    <p> {!! $pengeluaran->keterangan3 !!}</p>
+                                    <div style="overflow-wrap: break-word;"> {!! $pengeluaran->keterangan3 !!}</div>
                                 </div>
                             @endif
 
