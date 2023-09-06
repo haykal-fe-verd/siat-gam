@@ -39,7 +39,6 @@ class VerifikasiController extends Controller
     public function pengeluaranStore(Request $request)
     {
         $request->validate([
-            'nomor_pengeluaran' => 'required|unique:tb_pengeluaran,nomor_pengeluaran',
             'sumber_dana' => 'required',
             'nama_kegiatan' => 'required',
             'lama_kegiatan' => 'required',
@@ -48,6 +47,14 @@ class VerifikasiController extends Controller
             'tanggal_selesai' => 'nullable|date',
             'jumlah_pengeluaran' => 'required',
         ]);
+
+        $lastPengeluaran = Pengeluaran::latest('created_at')->first();
+
+        if ($lastPengeluaran) {
+            $parts = explode('/', $lastPengeluaran->nomor_pengeluaran);
+            $number = (int) $parts[0] + 1;
+            $nomorPengeluaran = sprintf('%03d', $number) . '/' . $parts[1] . '/' . $parts[2] . '/' . $parts[3];
+        }
 
         $pengeluaran = new Pengeluaran();
         $pengeluaran->nomor_pengeluaran = $request->input('nomor_pengeluaran');

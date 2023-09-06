@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="card">
         <div class="card-header">
-            <h4>Pengeluaran</h4>
+            <h4>Histori</h4>
         </div>
         <div class="card-body">
             <div class="row">
@@ -18,11 +18,6 @@
                         <i class="fas fa-search"></i>
                         <span>Filter</span>
                     </button>
-
-                    <a href="{{ route('verifikasi.index') }}" class="ml-3 btn btn-primary">
-                        <i class="fas fa-plus-circle"></i>
-                        <span>Tambah Pengeluaran</span>
-                    </a>
                 </div>
             </div>
 
@@ -41,6 +36,7 @@
                             <th>Lama Kegiatan</th>
                             <th>Jumlah Pengeluaran</th>
                             <th>Status</th>
+                            <th><i class="fas fa-cog"></i></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,7 +66,7 @@
 
                 $('#data-table-laravel').dataTable({
                     serverSide: true,
-                    ajax: "{{ route('pengeluaran.index') }}",
+                    ajax: "{{ route('histori.index') }}",
                     columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
@@ -128,6 +124,36 @@
                                     badgeClass + '">' + data + '</span>';
                             }
                         },
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: false,
+                            render: function(data, type, row) {
+                                var actionButtons = '';
+
+                                if (row.status === 'disetujui') {
+
+                                    actionButtons +=
+                                        '<a href="' + row.edit_url +
+                                        '" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></a>';
+
+                                    if (row.laporan_akhir === "menunggu") {
+                                        actionButtons +=
+                                            '<a href="' + row.lapakhir_url +
+                                            '" class="btn btn-sm btn-success"><i class="fas fa-check"></i></a>';
+                                    }
+
+                                }
+
+                                return '<div class="btn-group" role="group">' +
+                                    '<a href="' + row.detail_url +
+                                    '" class="btn btn-sm btn-warning"><i class="fas fa-eye"></i></a>' +
+
+                                    actionButtons +
+                                    '</div>';
+                            }
+                        }
                     ],
                     dom: 'Bfrtip',
                     buttons: [

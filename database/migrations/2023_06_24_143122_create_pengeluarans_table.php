@@ -27,6 +27,12 @@ return new class extends Migration
             $table->string('gambar_awal')->nullable();
             $table->string('gambar_tengah')->nullable();
             $table->string('gambar_akhir')->nullable();
+            $table->string('proses1')->nullable();
+            $table->string('proses2')->nullable();
+            $table->string('proses3')->nullable();
+            $table->text('keterangan1')->nullable();
+            $table->text('keterangan2')->nullable();
+            $table->text('keterangan3')->nullable();
             $table->timestamps();
 
             $table->foreign('sumber_dana')->references('id')->on('tb_pemasukan')->onUpdate('restrict')->onDelete('restrict');

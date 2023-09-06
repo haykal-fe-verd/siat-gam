@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\HistoriController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KomentarController;
 use App\Http\Controllers\MapController;
@@ -55,6 +56,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('pengeluaran/{id}/edit', [PengeluaranController::class, 'edit'])->name('pengeluaran.edit');
         Route::put('pengeluaran/{id}', [PengeluaranController::class, 'updateGambar'])->name('pengeluaran.update');
         Route::get('pengeluaran/{id}/laporan-akhir', [PengeluaranController::class, 'laporanAkhir'])->name('pengeluaran.laporan.akhir.update');
+
+        // histori
+        Route::get('histori', [HistoriController::class, 'index'])->name('histori.index');
+        Route::get('histori/{id}', [HistoriController::class, 'show'])->name('histori.show');
+        Route::get('histori/{id}/edit', [HistoriController::class, 'edit'])->name('histori.edit');
+        Route::put('histori/{id}', [HistoriController::class, 'updateGambar'])->name('histori.update');
+        Route::get('histori/{id}/laporan-akhir', [HistoriController::class, 'laporanAkhir'])->name('histori.laporan.akhir.update');
     });
 
     // cuma keuchik yang bisa

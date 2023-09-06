@@ -40,6 +40,12 @@
                         <span>Pengeluaran</span>
                     </a>
                 </li>
+                <li class="dropdown {{ request()->routeIs('histori*') ? 'active' : '' }}">
+                    <a href="{{ route('histori.index') }}" class="nav-link">
+                        <i data-feather="share-2"></i>
+                        <span>Histori Pengerjaan</span>
+                    </a>
+                </li>
             @endcan
 
             @can('keuchik')

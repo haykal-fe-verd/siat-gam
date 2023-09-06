@@ -1,5 +1,4 @@
 <x-app-layout>
-    {!! json_encode($pengeluaranChart, JSON_NUMERIC_CHECK) !!}
     <div class="row ">
         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
             <div class="card">

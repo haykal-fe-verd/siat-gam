@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-12 entries">
                     <div class="section-title">
-                        <h2>Detail Pengeluaran {{ $pengeluaran->nomor_pengeluaran }}</h2>
+                        <h2>Histori Pengerjaan {{ $pengeluaran->nomor_pengeluaran }}</h2>
                     </div>
 
                     <div>
@@ -50,6 +50,9 @@
                                     <p>Gambar Awal</p>
                                     <img src="{{ Storage::url($pengeluaran->gambar_awal) }}" alt="Gambar awal"
                                         width="100%" height="400px" style="object-fit: cover">
+                                    <hr>
+                                    <h4 class="mt-3 fw-bold">{{ $pengeluaran->proses1 }}</h4>
+                                    <p> {!! $pengeluaran->keterangan1 !!}</p>
                                 </div>
                             @endif
 
@@ -58,6 +61,9 @@
                                     <p>Gambar Tengah</p>
                                     <img src="{{ Storage::url($pengeluaran->gambar_tengah) }}" alt="Gambar tengah"
                                         width="100%" height="400px" style="object-fit: cover">
+                                    <hr>
+                                    <h4 class="mt-3 fw-bold">{{ $pengeluaran->proses2 }}</h4>
+                                    <p> {!! $pengeluaran->keterangan2 !!}</p>
                                 </div>
                             @endif
 
@@ -66,13 +72,17 @@
                                     <p>Gambar Akhir</p>
                                     <img src="{{ Storage::url($pengeluaran->gambar_akhir) }}" alt="Gambar akhir"
                                         width="100%" height="400px" style="object-fit: cover">
+                                    <hr>
+                                    <h4 class="mt-3 fw-bold">{{ $pengeluaran->proses3 }}</h4>
+                                    <p> {!! $pengeluaran->keterangan3 !!}</p>
                                 </div>
                             @endif
 
                         </div>
 
+                        <hr>
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-12 mt-5">
                                 <a href="{{ route('all.pengeluaran') }}" class="btn btn-danger">Kembali</a>
                             </div>
                         </div>
