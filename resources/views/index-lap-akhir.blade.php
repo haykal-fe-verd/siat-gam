@@ -33,8 +33,10 @@
                                     <th>Sumber Pengeluaran</th>
                                     <th>Nama Kegiatan</th>
                                     <th>Penanggung Jawab</th>
-                                    <th>Tanggal</th>
+                                    <th>Tanggal Mulai</th>
+                                    <th>Tanggal Selesai</th>
                                     <th>Lama Kegiatan</th>
+                                    <th>Status</th>
                                     <th>Jumlah Pengeluaran</th>
                                 </tr>
                             </thead>
@@ -50,7 +52,11 @@
                                         </td>
                                         <td>{{ $pengeluaran->penanggung_jawab }}</td>
                                         <td style="text-align: center">{{ $pengeluaran->tanggal_pengeluaran }}</td>
-                                        <td style="text-align: right">{{ $pengeluaran->lama_kegiatan }} Hari </td>
+                                        <td style="text-align: center">{{ $pengeluaran->tanggal_selesai }}</td>
+                                        <td style="text-align: center">{{ $pengeluaran->lama_kegiatan }} Hari </td>
+                                        <td style="text-align: center">
+                                            {{ $pengeluaran->laporan_akhir === 'disetujui' ? 'Selesai' : 'Proses' }}
+                                        </td>
 
                                         <td style="width: 300px; text-align: right">Rp.
                                             {{ number_format($pengeluaran->jumlah_pengeluaran) }} ,-</td>

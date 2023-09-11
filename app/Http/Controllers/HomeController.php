@@ -196,7 +196,7 @@ class HomeController extends Controller
 
         $pengeluarans = $query->paginate(10);
         $totalPengeluaran = $query->sum('jumlah_pengeluaran');
-
+        // dd($pengeluarans);
         return view('index-lap-akhir', compact('pengeluarans', 'totalPengeluaran'));
     }
 }

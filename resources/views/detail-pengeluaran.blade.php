@@ -33,8 +33,12 @@
                                     <td>{{ $pengeluaran->penanggung_jawab }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Tanggal Pengeluaran</td>
+                                    <td>Tanggal Mulai</td>
                                     <td>{{ $pengeluaran->tanggal_pengeluaran }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tanggal Selesai</td>
+                                    <td>{{ $pengeluaran->tanggal_selesai }}</td>
                                 </tr>
                                 <tr>
                                     <td>Jumlah Pengeluaran</td>
