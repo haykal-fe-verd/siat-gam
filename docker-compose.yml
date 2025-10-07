@@ -1,0 +1,104 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: ./docker/php/Dockerfile
+        container_name: laravel-app
+        working_dir: /var/www/html
+        environment:
+            APP_ENV: local
+            APP_DEBUG: "true"
+            COMPOSER_ALLOW_SUPERUSER: "1"
+        volumes:
+            - ./:/var/www/html
+        depends_on:
+            - db
+        networks:
+            - laravel
+        command: ["/bin/sh", "/usr/local/bin/entrypoint.sh"]
+
+    web:
+        image: nginx:1.27-alpine
+        container_name: laravel-nginx
+        platform: linux/arm64
+        ports:
+            - "80:80"
+        volumes:
+            - ./:/var/www/html:ro
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+        depends_on:
+            - app
+        networks:
+            - laravel
+
+    db:
+        image: postgres:16-alpine
+        container_name: laravel-postgres
+        platform: linux/arm64
+        restart: unless-stopped
+        environment:
+            POSTGRES_DB: laravel
+            POSTGRES_USER: laravel
+            POSTGRES_PASSWORD: laravel
+            TZ: Asia/Jakarta
+        ports:
+            - "5432:5432"
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+            - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/00-init.sql:ro
+        networks:
+            - laravel
+
+    node:
+        image: node:22-alpine
+        container_name: laravel-node
+        platform: linux/arm64
+        working_dir: /app
+        entrypoint: ["/bin/sh", "-lc"]
+        command: >
+            corepack enable &&
+            corepack prepare pnpm@latest --activate &&
+            pnpm install &&
+            pnpm run dev
+        ports:
+            - "5173:5173"
+        environment:
+            VITE_HOST: 0.0.0.0
+            VITE_PORT: 5173
+        volumes:
+            - ./:/app
+            - node_modules_cache:/app/node_modules
+        depends_on:
+            - app
+        networks:
+            - laravel
+        profiles: ["node"]
+
+    bun:
+        image: oven/bun:1.1-alpine
+        container_name: laravel-bun
+        platform: linux/arm64
+        working_dir: /app
+        command: >
+            sh -lc "bun install && bun run dev"
+        ports:
+            - "5174:5173"
+        environment:
+            VITE_HOST: 0.0.0.0
+            VITE_PORT: 5173
+        volumes:
+            - ./:/app
+            - bun_cache:/root/.bun
+        depends_on:
+            - app
+        networks:
+            - laravel
+        profiles: ["bun"]
+
+networks:
+    laravel:
+
+volumes:
+    pgdata:
+    node_modules_cache:
+    bun_cache:
